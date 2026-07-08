@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dispatch Text Alerts — Opt In | Pop-A-Lock of Northern New Jersey</title>
+<meta name="description" content="Opt-in page for Pop-A-Lock of Northern New Jersey technicians and managers to consent to receive operational dispatch text alerts.">
+<style>
+  :root { color-scheme: light; }
+  body { max-width: 680px; margin: 0 auto; padding: 40px 22px 64px;
+         font: 16px/1.65 -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+         color: #1a2530; background: #fff; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 30px 0 8px; }
+  .sub { color: #6a7a8a; margin: 0 0 22px; font-size: 15px; }
+  p { margin: 10px 0; }
+  a { color: #1668b8; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  ul { padding-left: 22px; }
+  li { margin: 4px 0; }
+  form { border: 1px solid #dde6ee; border-radius: 10px; padding: 20px 20px 8px;
+         background: #f7fafc; margin: 22px 0; }
+  label { display: block; font-weight: 600; color: #0d1a24; margin: 14px 0 4px; }
+  input[type=text], input[type=tel] {
+         width: 100%; box-sizing: border-box; padding: 10px 12px; font-size: 16px;
+         border: 1px solid #c3d0dd; border-radius: 7px; background: #fff; }
+  .consent { display: flex; gap: 10px; align-items: flex-start; margin: 18px 0 6px;
+             font-weight: 400; }
+  .consent input { margin-top: 4px; flex: 0 0 auto; width: 18px; height: 18px; }
+  .consent span { font-size: 14px; line-height: 1.5; color: #33414f; }
+  button { margin: 16px 0 8px; width: 100%; padding: 13px 16px; font-size: 16px;
+           font-weight: 600; color: #fff; background: #1668b8; border: 0;
+           border-radius: 8px; cursor: pointer; }
+  button:disabled { background: #9db6cc; cursor: default; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .fine { color: #6a7a8a; font-size: 13px; margin: 4px 0 14px; }
+  #msg { margin: 14px 0 4px; padding: 12px 14px; border-radius: 8px; font-size: 15px;
+         display: none; }
+  #msg.ok  { display: block; background: #e6f5ec; border: 1px solid #b8e0c6; color: #185c33; }
+  #msg.err { display: block; background: #fdecec; border: 1px solid #f2c2c2; color: #8a1f1f; }
+  footer { margin-top: 40px; color: #6a7a8a; font-size: 13px;
+           border-top: 1px solid #e5ecf2; padding-top: 14px; }
+</style>
+</head>
+<body>
+
+<h1>Dispatch Text Alerts &mdash; Opt In</h1>
+<p class="sub">Pop-A-Lock of Northern New Jersey &middot; for our technicians &amp; managers</p>
+
+<p>This page is for <strong>Pop-A-Lock of Northern New Jersey field technicians and
+managers</strong> to sign up for our internal <strong>dispatch text-alert program</strong>.
+When you are issued a company phone or enroll your work mobile number, use this form to
+give your consent to receive operational dispatch texts on that number.</p>
+
+<h2>What you are signing up for</h2>
+<ul>
+  <li>Brief <strong>operational alerts</strong> when a service call is assigned to you
+      (for example, <em>&ldquo;Wake up Mike &mdash; new call on the board in Newark. Pulsar.&rdquo;</em>).</li>
+  <li>Follow-up <strong>&ldquo;wake-up&rdquo; reminders</strong> if a dispatch has not been
+      acknowledged, which may escalate to your manager.</li>
+  <li>These are work-related messages only. <strong>We never send marketing or
+      promotional texts</strong> through this program.</li>
+</ul>
+
+<form id="optin-form" novalidate>
+  <label for="name">Your name</label>
+  <input type="text" id="name" name="name" autocomplete="name" placeholder="First and last name">
+
+  <label for="phone">Work mobile number</label>
+  <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel"
+         placeholder="(973) 555-0123" required>
+
+  <!-- honeypot: real people leave this blank; bots fill it -->
+  <div class="hp" aria-hidden="true">
+    <label for="company">Company</label>
+    <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+  </div>
+
+  <label class="consent" for="consent">
+    <input type="checkbox" id="consent" name="consent" required>
+    <span>I agree to receive operational dispatch text messages from Pop-A-Lock of
+    Northern New Jersey at the mobile number above. Message frequency varies with
+    dispatch volume. Message and data rates may apply. Reply <strong>STOP</strong> to
+    cancel at any time, or <strong>HELP</strong> for help. See our
+    <a href="./privacy.html">Privacy Policy</a> and
+    <a href="./terms.html">Terms &amp; Conditions</a>.</span>
+  </label>
+
+  <button type="submit" id="submit">I opt in</button>
+  <p class="fine">Consent is not a condition of purchase. Your number is used only to
+  operate this dispatch program and is never sold or shared with third parties.</p>
+  <div id="msg" role="status" aria-live="polite"></div>
+</form>
+
+<h2>Prefer to opt in by text?</h2>
+<p>You can also opt in from your phone: text <strong>START</strong> to
+<strong>+1&nbsp;862&nbsp;375&nbsp;4731</strong>. Reply <strong>STOP</strong> to any
+message to opt out, or <strong>HELP</strong> for help.</p>
+
+<footer>
+Pop-A-Lock of Northern New Jersey is operated by Evergreen Systems, Inc. This page and
+our SMS policies are provided to meet mobile carrier (CTIA) and messaging-provider
+requirements for application-to-person (A2P) messaging.
+</footer>
+
+<script>
+(function () {
+  var ENDPOINT = "https://optin.palnnj-tools.com/optin";
+  var form = document.getElementById("optin-form");
+  var btn  = document.getElementById("submit");
+  var msg  = document.getElementById("msg");
+
+  function show(kind, text) { msg.className = kind; msg.textContent = text; }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var phone   = document.getElementById("phone").value.trim();
+    var name    = document.getElementById("name").value.trim();
+    var consent = document.getElementById("consent").checked;
+    var company = document.getElementById("company").value; // honeypot
+
+    var digits = phone.replace(/\D/g, "");
+    if (digits.length < 10) { show("err", "Please enter a valid 10-digit mobile number."); return; }
+    if (!consent) { show("err", "Please check the consent box to opt in."); return; }
+
+    btn.disabled = true; show("", ""); msg.className = "";
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phone: phone, name: name, consent: true, company: company })
+    })
+    .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+    .then(function (res) {
+      if (res.ok && res.j && res.j.ok) {
+        form.reset();
+        show("ok", "Thank you — you are opted in to Pop-A-Lock of Northern NJ dispatch alerts. Reply STOP to any message to opt out.");
+      } else {
+        btn.disabled = false;
+        show("err", (res.j && res.j.error) ? res.j.error : "Something went wrong. Please try again or contact us.");
+      }
+    })
+    .catch(function () {
+      btn.disabled = false;
+      show("err", "Could not reach the server. Please check your connection and try again.");
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
